@@ -19,8 +19,6 @@ namespace ProjectDB
         private string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=Projects;Integrated Security=True";
         private int ProjectCount = 0;
         private int NewProject = 0;
-        private int addingEmpsPerProject = 0;
-        private int subtractingEmpsPerProject = 0;
         private int tempEmp = 0;
 
         [TestInitialize]
@@ -40,12 +38,7 @@ namespace ProjectDB
                 cmd = new SqlCommand("INSERT INTO [dbo].[employee] ([department_id] ,[first_name] ,[last_name] ,[job_title] ,[birth_date] ,[gender] ,[hire_date]) VALUES (2, 'John', 'Fulton', 'IT Guy 1', '12-25-1980', 'M', '01-01-2018'); SELECT CAST(SCOPE_IDENTITY() as int);", conn);
                 tempEmp = (int)cmd.ExecuteScalar();
 
-                cmd = new SqlCommand($"INSERT INTO [dbo].[project_employee] ([project_id] ,[employee_id]) VALUES (7, {tempEmp})", conn);
-                addingEmpsPerProject = cmd.ExecuteNonQuery();
 
-                cmd = new SqlCommand($"delete FROM project_employee WHERE project_id = 7 AND employee_id = {tempEmp}", conn);
-                subtractingEmpsPerProject = cmd.ExecuteNonQuery();
-         
             }
         }
         [TestCleanup]
@@ -55,27 +48,42 @@ namespace ProjectDB
         }
 
         [TestMethod]
-        public void getAllProjects()
+        public void GetAllProjects()
         {
             ProjectSqlDAL newProject = new ProjectSqlDAL(connectionString);
             List<Project> listOfProjects = newProject.GetAllProjects();
             Assert.AreEqual(ProjectCount + 1, listOfProjects.Count());
 
         }
+
         [TestMethod]
-        public void AssigningEmp()
+        public void AssignEmployeeToProject()
+        {
+            ProjectSqlDAL newProject = new ProjectSqlDAL(connectionString);  
+            Assert.AreEqual(true, newProject.AssignEmployeeToProject(4, tempEmp));
+
+        }
+
+        [TestMethod]
+        public void RemoveEmployeeFromProject()
         {
             ProjectSqlDAL newProject = new ProjectSqlDAL(connectionString);
-            Assert.AreEqual(1, addingEmpsPerProject);
+            newProject.AssignEmployeeToProject(4, tempEmp);
+            Assert.AreEqual(true, newProject.RemoveEmployeeFromProject(4, tempEmp));
 
         }
         [TestMethod]
-        public void RemovingEmp()
+        public void CreateProject()
         {
             ProjectSqlDAL newProject = new ProjectSqlDAL(connectionString);
-            Assert.AreEqual(1, subtractingEmpsPerProject);
+            Project testProject = new Project();
+            testProject.Name = "TestProject";
+            testProject.StartDate = Convert.ToDateTime( "12-20-1994");
+            testProject.EndDate = Convert.ToDateTime("01-01-2018");
+
+            Assert.IsTrue(newProject.CreateProject(testProject));
+
 
         }
-        
     }
 }
