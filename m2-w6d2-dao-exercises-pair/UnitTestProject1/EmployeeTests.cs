@@ -46,7 +46,7 @@ namespace ProjectDB
         }
 
         [TestMethod]
-        public void getAllEmp()
+        public void GetAllEmployees()
         {
             EmployeeSqlDAL newEmp = new EmployeeSqlDAL(connectionString);
             List<Employee> listOfEmp = newEmp.GetAllEmployees();
@@ -62,7 +62,7 @@ namespace ProjectDB
 
         }
         [TestMethod]
-        public void LazyEmpTest()
+        public void LazyEmployeeTest()
         {
             EmployeeSqlDAL thisemp = new EmployeeSqlDAL(connectionString);
             List<Employee> listOfEmps = thisemp.GetEmployeesWithoutProjects();

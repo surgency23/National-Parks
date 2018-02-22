@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectDB", "ProjectDB\ProjectDB.csproj", "{659540B3-3A05-4895-A515-084E10D8B808}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{7A15F02C-8899-4CF4-B986-8A5A50B31273}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectDB_Tests", "UnitTestProject1\ProjectDB_Tests.csproj", "{7A15F02C-8899-4CF4-B986-8A5A50B31273}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
