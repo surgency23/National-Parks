@@ -53,7 +53,10 @@ namespace Capstone.DAL
             return campgroundsPerPark;
 
         }
-        public bool IsOffSeason()
+        public bool IsOffSeason()/*maybe should be in the reservation method */
+        {
+            return false;
+        }
 
     }
 }
