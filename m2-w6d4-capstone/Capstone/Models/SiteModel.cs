@@ -8,17 +8,19 @@ namespace Capstone.Models
 {
     public class SiteModel
     {
-        public int siteId { get; set; }
-        public int campgroundId { get; set; }
-        public int siteNumber { get; set; }
-        public int maxOccupancy { get; set; }
-        public string handicapAccessiblity { get; set; }
-        public int maxRVLength { get; set; }
-        public string utilities { get; set; }
+        public int SiteId { get; set; }
+        public int CampgroundId { get; set; }
+        public int SiteNumber { get; set; }
+        public int MaxOccupancy { get; set; }
+        public string HandicapAccessiblity { get; set; }
+        public int MaxRVLength { get; set; }
+        public string Utilities { get; set; }
+ 
+
 
         public override string ToString()
         {
-            return siteId.ToString().PadRight(10) + siteNumber.ToString().PadRight(40) + maxOccupancy.ToString().PadRight(10) + handicapAccessiblity.PadRight(10) + maxRVLength.ToString().PadRight(10) + utilities.PadRight(10);
+            return SiteId.ToString().PadRight(10) + SiteNumber.ToString().PadRight(40) + MaxOccupancy.ToString().PadRight(10) + HandicapAccessiblity.PadRight(10) + MaxRVLength.ToString().PadRight(10) + Utilities.PadRight(10);
         }
     }
 }

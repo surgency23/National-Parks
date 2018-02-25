@@ -56,6 +56,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ParkTests.cs" />
     <Compile Include="CampGroundTests.cs" />
+    <Compile Include="SiteTest.cs" />
+    <Compile Include="ReservationTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Capstone\Capstone.csproj">

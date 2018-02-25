@@ -59,14 +59,14 @@ namespace Capstone.Tests
             Assert.AreEqual(campGroundCount+1, campgroundList.Count);
         }
 
-        [TestMethod]
-        public void IsOffSeasonTest()
-        {
-            CampGroundDAL thisCampground = new CampGroundDAL(connectionString);
-            bool userDateInput = thisCampground.IsOffSeason();
-            Assert.AreEqual(true, userDateInput);
+        //[TestMethod]
+        //public void IsOffSeasonTest()
+        //{
+        //    CampGroundDAL thisCampground = new CampGroundDAL(connectionString);
+        //    bool userDateInput = thisCampground.IsOffSeason();
+        //    Assert.AreEqual(true, userDateInput);
 
-        }
+        //}
 
     }
 }
