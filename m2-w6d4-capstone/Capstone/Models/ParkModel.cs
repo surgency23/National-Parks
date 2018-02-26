@@ -16,9 +16,12 @@ namespace Capstone.Models
         public int Visitors { get; set; }
         public string ParkDescription { get; set; }
 
+
+
         public override string ToString()
         {
-            return ParkId.ToString().PadRight(10) + ParkName.PadRight(40) + ParkLocation.PadRight(10) + ParkEstablishDate.ToString().PadRight(10) + Area.ToString().PadRight(10) + Visitors.ToString().PadRight(10) + ParkDescription.PadRight(10);
+            return $"{ParkId.ToString()} {ParkName.PadRight(10)} {ParkLocation.PadRight(10)} {ParkEstablishDate.ToString().PadRight(10)} {Area.ToString().PadRight(10)} {Visitors.ToString().PadRight(10)} {ParkDescription.PadRight(10)}";
+
         }
     }
 }

@@ -12,6 +12,7 @@ namespace Capstone.DAL
     {
         private string connectionString;
         private const string SQL_GetParks = "SELECT * FROM PARK ORDER BY NAME";
+        private string parkDesc = "";
 
         public ParkDAL(string dbconnectionString)
         {
@@ -39,7 +40,7 @@ namespace Capstone.DAL
                         newPark.Area = Convert.ToInt32(reader["area"]);
                         newPark.Visitors = Convert.ToInt32(reader["visitors"]);
                         newPark.ParkDescription = Convert.ToString(reader["description"]);
-
+                        parkDesc = Convert.ToString(reader["description"]);
                         parkList.Add(newPark);
                     }
                 }

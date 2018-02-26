@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace Capstone
 {
@@ -17,7 +18,9 @@ namespace Capstone
 
         public override string ToString()
         {
-            return CampgroundId.ToString().PadRight(10) + CampgroundName.PadRight(40) + CampgroundOpenMonth.ToString().PadRight(10) + CampgroundCloseMonth.ToString().PadRight(10) + DailyCost.ToString("C2").PadRight(10);
+            
+ 
+            return "#"+CampgroundId.ToString().PadRight(10) + CampgroundName.PadRight(30) + CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(CampgroundOpenMonth).PadRight(15) + CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(CampgroundCloseMonth).PadRight(15) + DailyCost.ToString("C2").PadRight(10);
         }
     }
 }

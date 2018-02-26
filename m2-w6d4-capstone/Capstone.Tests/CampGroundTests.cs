@@ -52,7 +52,7 @@ namespace Capstone.Tests
 
 
         [TestMethod]
-        public void campgroundInformationTest()
+        public void CampgroundInformationTest()
         {
             CampGroundDAL thisCampground = new CampGroundDAL(connectionString);
             List<CampgroundModel> campgroundList = thisCampground.CampgroundsInPark("1");

@@ -15,6 +15,7 @@ namespace Capstone
         private string connectionString;
         private decimal sitePrice = 0.00M;
         private string userParkChoice = "";
+        private int reservedDays = 0;
 
 
         public CampingCLI(string connectionString)
@@ -39,6 +40,7 @@ namespace Capstone
 
             ParkDAL allParks = new ParkDAL(connectionString);
             List<ParkModel> compiledParks = allParks.GetAllParks();
+            Console.WriteLine("Select a Park for Further Details ");
             for (int i = 0; i < compiledParks.Count; i++)
             {
                 Console.WriteLine($"{compiledParks[i].ParkId}) {compiledParks[i].ParkName}");
@@ -55,6 +57,9 @@ namespace Capstone
                 }
                 else if (parkId != item.ParkId.ToString())
                 {
+                    //Console.WriteLine("Please Select Valid Option");
+                    //Console.ReadLine();
+                    //Console.Clear();
                     //SEE IF YOU CAN FIGURE OUT HOW TO NOT WRITE THSI MESSAGE 10000 TIMES
                     //Console.WriteLine("Please make a valid selection ");
                 }
@@ -71,14 +76,21 @@ namespace Capstone
         public void ParkInformation(string parkId)
         {
             ParkDAL thisPark = new ParkDAL(connectionString);
+            List<ParkModel> parkInfoList = thisPark.GetAllParks();
 
-            List<ParkModel> compiledList = thisPark.GetAllParks();
+            Console.WriteLine("Park Information");
 
-            for (int i = 0; i < compiledList.Count; i++)
+            for (int i = 0; i < parkInfoList.Count; i++)
             {
-                if (parkId == compiledList[i].ParkId.ToString())
+                if (parkId == parkInfoList[i].ParkId.ToString())
                 {
-                    Console.WriteLine(compiledList[i].ToString());
+                    Console.WriteLine(parkInfoList[i].ParkName + " National Park");
+                    Console.WriteLine("Location:" + parkInfoList[i].ParkLocation.PadLeft(20));
+                    Console.WriteLine("Established:".PadRight(24) + parkInfoList[i].ParkEstablishDate.Date.ToShortDateString());
+                    Console.WriteLine("Area:" + parkInfoList[i].Area.ToString().PadLeft(24)+" sq km");
+                    Console.WriteLine("Annual Visitors:" + parkInfoList[i].Visitors.ToString().PadLeft(15));
+                    Console.WriteLine();
+                    WrapText(parkInfoList[i].ParkDescription);
                 }
             }
 
@@ -97,9 +109,9 @@ namespace Capstone
                 Console.WriteLine("2) Return To Previous Screen");
                 Console.WriteLine();
 
-                string userInput = Console.ReadLine();
+                string userInputParkMenu = Console.ReadLine();
 
-                if (userInput == "1")
+                if (userInputParkMenu == "1")
                 {
                     ViewCampgrounds(parkId);
                     
@@ -109,35 +121,29 @@ namespace Capstone
                 //    ViewCampgrounds(parkId);
                 //    SearchReservationMenu();
                 //}
-                else if (userInput == "2")
+                else if (userInputParkMenu == "2")
                 {
+                    Console.Clear();
                     ifTrue = false;
+                    
                 }
                 else
                 {
                     Console.WriteLine("Please enter a valid selection");
                 }
-                //switch (userInput.ToLower())
-                //{
-                //    case "1":
-                //        ViewCampgrounds(parkId);
 
-                //        break;
-                //    case "2":
-                //        ViewCampgrounds(parkId);
-                //        SearchReservationMenu();
-                //        break;
-                //    case "3":
-                //        break;
-                //}
             }
         }
 
 
         public void ViewCampgrounds(string parkId)
         {
+            Console.Clear();
             CampGroundDAL campground = new CampGroundDAL(connectionString);
             List<CampgroundModel> campList = campground.CampgroundsInPark(parkId);
+            Console.WriteLine("Search for Campground Reservation");
+            Console.WriteLine();
+            Console.WriteLine("Name".PadLeft(17)+ "Open".PadLeft(29)+"Close".PadLeft(16) + "Daily Cost".PadLeft(18));
             for (int i = 0; i < campList.Count; i++)
             {
                 if (parkId == campList[i].ParkId.ToString())
@@ -156,8 +162,8 @@ namespace Capstone
             {
                 Console.WriteLine();
                 Console.WriteLine("Select a Command");
-                Console.WriteLine(" 1) Search For Available Reservation");
-                Console.WriteLine(" 2) Return To Previous Screen");
+                Console.WriteLine("  1) Search For Available Reservation");
+                Console.WriteLine("  2) Return To Previous Screen");
                 Console.WriteLine();
 
                 string userSelection = Console.ReadLine();
@@ -169,6 +175,7 @@ namespace Capstone
                 }
                 else if (userSelection == "2")
                 {
+                    Console.Clear();
                     ifTrue = false;
                 }
                 else
@@ -177,15 +184,6 @@ namespace Capstone
                 }
             }
 
-            //switch (userSelection.ToLower())
-            //{
-            //    case "1":
-            //        SearchReservationMenu();
-
-            //        break;
-            //    case "2":
-            //        return;
-            //}
         }
 
         public void SearchReservationMenu()
@@ -196,13 +194,19 @@ namespace Capstone
 
                 Console.Write("Which campground (enter 0 to cancel)? ");
                 string campgroundInput = Console.ReadLine();
+                userParkChoice = campgroundInput;
                 if (campgroundInput != "0")
                 {
-                    Console.Write("What Is the Arrival Date?(mm-dd-yyyy) ");
-                    string arrivalInput = Console.ReadLine();
-                    Console.Write("What is the Departure Date?(mm-dd-yyyy) ");
-                    string departureInput = Console.ReadLine();
+                    DateTime arrivalTime = CLIHelper.GetDateTime("What Is the Arrival Date?(mm-dd-yyyy) ");
+                    string arrivalInput = arrivalTime.Date.ToShortDateString();
+                    DateTime departTime = CLIHelper.GetDateTime("What is the Departure Date?(mm-dd-yyyy) ");
+                    string departureInput = departTime.Date.ToShortDateString();
+                    TimeSpan diff = (departTime - arrivalTime);
+                    reservedDays = diff.Days;
                     AvailableSites(campgroundInput, arrivalInput, departureInput);
+                 
+                   
+          
                     ifTrue = false;
                 }
                 else
@@ -214,9 +218,12 @@ namespace Capstone
 
         public void AvailableSites(string campgroundID, string arrivalDate, string endDate)
         {
+            Console.Clear();
             bool ifTrue = true;
             SiteDAL sites = new SiteDAL(connectionString);
             List<SiteModel> availableSiteList = sites.AvailableSiteSearch(campgroundID, arrivalDate, endDate);
+            Console.WriteLine("Results Matching Your Search Criteria");
+            Console.WriteLine("Site No."+ "Max Occup.".PadLeft(20)+ "Accessible?".PadLeft(20) + "Max RV Length".PadLeft(20) + "Utility".PadLeft(18) + "Cost".PadLeft(8));
             if (availableSiteList.Count == 0)
             {
                 Console.WriteLine("No Sites Available!");
@@ -232,7 +239,8 @@ namespace Capstone
                 {
                     if (campgroundID == campList[i].CampgroundId.ToString())
                     {
-                        sitePrice = campList[i].DailyCost;
+                        sitePrice = campList[i].DailyCost*(decimal)reservedDays;
+                       
 
                     }
                 }
@@ -287,6 +295,33 @@ namespace Capstone
 
             }
         }
+        public void WrapText(string description)
+        {
+
+            int myLimit = 65;
+
+            string[] words = description.Split(' ');
+
+            StringBuilder newSentence = new StringBuilder();
+
+            string line = "";
+            foreach (string word in words)
+            {
+                if ((line + word).Length > myLimit)
+                {
+                    newSentence.AppendLine(line);
+                    line = "";
+                }
+
+                line += string.Format("{0} ", word);
+            }
+            if (line.Length > 0)
+            {
+                newSentence.AppendLine(line);
+            }
+            Console.WriteLine(newSentence.ToString());
+        }
+
     }
 }
 

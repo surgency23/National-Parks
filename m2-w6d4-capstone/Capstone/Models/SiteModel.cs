@@ -20,7 +20,7 @@ namespace Capstone.Models
 
         public override string ToString()
         {
-            return SiteId.ToString().PadRight(10) + SiteNumber.ToString().PadRight(40) + MaxOccupancy.ToString().PadRight(10) + HandicapAccessiblity.PadRight(10) + MaxRVLength.ToString().PadRight(10) + Utilities.PadRight(10);
+            return SiteNumber.ToString().PadRight(20) + MaxOccupancy.ToString().PadRight(20) + HandicapAccessiblity.PadRight(20) + MaxRVLength.ToString().PadRight(20) + Utilities.PadRight(10);
         }
     }
 }
