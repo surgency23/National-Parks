@@ -9,7 +9,8 @@ using System.Data.SqlClient;
 namespace Capstone.DAL
 {
     public class ReservatorDAL
-    {
+    {   //Sql_reservation inserts a new reservation into database from user input name and dates
+        //sql_idGrabber finds name of inserted reservation for testing purposes to see if the users reservation actually worked
         private string connectionString;
         private const string SQL_reservation = @"INSERT INTO[dbo].[reservation] ([site_id] ,[name] ,[from_date] ,[to_date],[create_date])VALUES(@siteId, @name, @startDate, @endDate, @creationDate)";
         private const string SQL_idGrabber = @"select * from reservation WHERE name = @name";

@@ -7,7 +7,7 @@ using Capstone.Models;
 using System.Data.SqlClient;
 
 namespace Capstone.DAL
-{
+{//creates list of parks from sql table
     public class ParkDAL
     {
         private string connectionString;

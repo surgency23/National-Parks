@@ -30,27 +30,6 @@ namespace Capstone
             return dateValue;
         }
 
-        public static int GetInteger(string message)
-        {
-            string userInput = String.Empty;
-            int intValue = 0;
-            int numberOfAttempts = 0;
-
-            do
-            {
-                if (numberOfAttempts > 0)
-                {
-                    Console.WriteLine("Invalid format. Try again!");
-                }
-                Console.Write(message + " ");
-                userInput = Console.ReadLine();
-                numberOfAttempts++;
-            }
-            while (!int.TryParse(userInput, out intValue));
-
-            return intValue;
-        }
-
 
     }
 }

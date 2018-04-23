@@ -10,8 +10,12 @@ namespace Capstone.DAL
 {
     public class SiteDAL
     {
+        //sql_GetSites pulls all sites that are avaialable within the dates user inputs and campground ID in the database
         private string connectionString;
-        private const string SQL_GetSites = "SELECT TOP(5) * FROM site WHERE campground_id = @campgroundID AND site.site_id NOT IN( SELECT site.site_id FROM site JOIN reservation ON site.site_id = reservation.site_id WHERE reservation.from_date BETWEEN @arrival AND @departure OR reservation.to_date BETWEEN @arrival AND @departure OR (reservation.from_date<@arrival AND reservation.to_date> @departure))";
+        private const string SQL_GetSites = "SELECT TOP(5) * FROM site WHERE campground_id = @campgroundID AND site.site_id" +
+            " NOT IN( SELECT site.site_id FROM site JOIN reservation ON site.site_id = reservation.site_id" +
+            " WHERE reservation.from_date BETWEEN @arrival AND @departure OR reservation.to_date " +
+            "BETWEEN @arrival AND @departure OR (reservation.from_date<@arrival AND reservation.to_date> @departure))";
 
         public SiteDAL(string dbconnectionString)
         {

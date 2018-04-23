@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
-
+//creates list of campgrounds from sql using the users parkID input
 namespace Capstone.DAL
 {
     public class CampGroundDAL
@@ -53,10 +53,7 @@ namespace Capstone.DAL
             return campgroundsPerPark;
 
         }
-        public bool IsOffSeason()/*maybe should be in the reservation method */
-        {
-            return false;
-        }
+
 
     }
 }
